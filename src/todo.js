@@ -14,6 +14,9 @@ class Todo {
     this.isComplete = isComplete;
     this.id = id;
   }
+  changeIsComplete() {
+    this.isComplete = !this.isComplete;
+  }
 }
 
 class Project {
@@ -35,8 +38,11 @@ class Project {
   addTodo(todo) {
     this.todos.push(todo);
   }
+  log() {
+    console.log(this.todos);
+  }
 }
 
-let projects = [];
 
-export {};
+
+export { Project, Todo };
