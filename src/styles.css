@@ -9,6 +9,8 @@
 .todoContainer {
   background-color: rgb(184, 184, 236);
 }
+
+/* hidden form */
 .expandable-container {
   max-width: 300px;
 }
@@ -37,3 +39,4 @@
 .expandable-container.active .openForm {
   display: none;
 }
+/* hidden form */

@@ -1,10 +1,11 @@
-import { projects, createElement, addTodo } from "./todo.js";
+import { projects, createElement, addTodo, makeProject } from "./todo.js";
 import "./styles.css";
 
 const projectContainer = document.querySelector(".projects");
 const openFormBtn = document.querySelector(".openForm");
 const expandProjectContainer = document.querySelector(".expandable-container");
 const closeFormBtn = document.querySelector(".close");
+const form = document.querySelector("form");
 
 openFormBtn.addEventListener("click", () => {
   expandProjectContainer.classList.add("active");
@@ -13,6 +14,14 @@ closeFormBtn.addEventListener("click", () => {
   expandProjectContainer.classList.remove("active");
 });
 
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  expandProjectContainer.classList.remove("active");
+  const projectName = new FormData(form).get("newProject");
+  makeProject(projectName);
+  displayProject();
+  form.reset();
+});
 
 let selectedProject = projects[0];
 
@@ -43,4 +52,4 @@ addTodo(
   true,
 );
 
-export { currentProject, selectedProject };
+export { currentProject };

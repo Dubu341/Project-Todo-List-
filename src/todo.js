@@ -1,4 +1,4 @@
-import { currentProject, selectedProject } from "./index.js";
+import { currentProject } from "./index.js";
 class Todo {
   constructor(
     title,
@@ -66,4 +66,4 @@ function createElement(tag, className, text) {
   return element;
 }
 
-export { projects, createElement, addTodo };
+export { projects, createElement, addTodo, makeProject };
