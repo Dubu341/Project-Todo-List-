@@ -50,14 +50,21 @@ function makeProject(name) {
   projects.push(new Project(name));
 }
 
-function addTodo(title, description, dueDate, priority, isComplete) {
+function newTodo(title, description, dueDate, priority, isComplete) {
   currentProject().addTodo(
     new Todo(title, description, dueDate, priority, isComplete),
   );
 }
 
+//for display testing
 makeProject("First Project");
 makeProject("Second Project");
+const firstProject = projects[0];
+const secondProject = projects[1];
+secondProject.addTodo(new Todo("test", "testtesttest", "11/11/1111", "high"));
+secondProject.addTodo(new Todo("test1", "testtesttest1", "22/11/1111", "high"));
+firstProject.addTodo(new Todo("test1", "testtesttest1", "22/11/1111", "high"));
+//for display testing
 
 function createElement(tag, className, text) {
   let element = document.createElement(tag);
@@ -66,4 +73,4 @@ function createElement(tag, className, text) {
   return element;
 }
 
-export { projects, createElement, addTodo, makeProject };
+export { projects, createElement, newTodo, makeProject };

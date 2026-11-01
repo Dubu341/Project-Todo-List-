@@ -1,7 +1,8 @@
-import { projects, createElement, addTodo, makeProject } from "./todo.js";
+import { projects, createElement, newTodo, makeProject } from "./todo.js";
 import "./styles.css";
 
 const projectContainer = document.querySelector(".projects");
+const todosContainer = document.querySelector(".todoContainer");
 const openFormBtn = document.querySelector(".openForm");
 const expandProjectContainer = document.querySelector(".expandable-container");
 const closeFormBtn = document.querySelector(".close");
@@ -38,18 +39,29 @@ function displayProject() {
     projectDiv.addEventListener("click", () => {
       selectedProject = project;
       console.log(selectedProject.name, project);
+      displayTodos();
     });
     projectContainer.append(projectDiv);
   });
 }
 displayProject();
 
-addTodo(
+newTodo(
   "Meeting",
   "team sync to review progress and next steps",
   "11/12/1999",
   "a",
   true,
 );
+
+function displayTodos() {
+  todosContainer.textContent = "";
+  currentProject().todos.forEach((todo) => {
+    const todoCard = createElement("div", "todoCard");
+    todosContainer.append(todoCard);
+    todoCard.append(todo.title, todo.dueDate);
+  });
+}
+displayTodos();
 
 export { currentProject };
