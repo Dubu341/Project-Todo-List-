@@ -1,4 +1,11 @@
-import { projects, createElement, newTodo, makeProject } from "./todo.js";
+import {
+  projects,
+  createElement,
+  newTodo,
+  makeProject,
+  removeProject,
+  defaultProject,
+} from "./todo.js";
 import "./styles.css";
 
 const projectContainer = document.querySelector(".projects");
@@ -34,19 +41,27 @@ function displayProject() {
   projectContainer.textContent = "";
   projects.forEach((project) => {
     const projectDiv = createElement("div", "project");
-    // const removeProject = createElement("button", "removeProject", "Delete");
+    const removeProjectBtn = createElement("button", "removeProject", "Delete");
+
     projectDiv.append(project.name);
-    // projectDiv.setAttribute("data-id", project.id);
+    projectDiv.setAttribute("data-id", project.id);
 
     projectDiv.addEventListener("click", () => {
       selectedProject = project;
       console.log(selectedProject.name, project);
-      //   let projectId = projectDiv.getAttribute("data-id");
-      //   projects = projects.filter((item) => item.id != projectId);
       displayTodos();
     });
-    // projectDiv.append(removeProject);
-    projectContainer.append(projectDiv);
+
+    removeProjectBtn.addEventListener("click", () => {
+      let projectId = projectDiv.getAttribute("data-id");
+      removeProject(projectId);
+      defaultProject();
+      selectedProject = projects[0];
+      displayProject();
+      displayTodos();
+    });
+
+    projectContainer.append(projectDiv, removeProjectBtn);
   });
 }
 displayProject();

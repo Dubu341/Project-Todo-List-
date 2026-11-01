@@ -47,10 +47,17 @@ class Project {
 
 let projects = [];
 
+function removeProject(id) {
+  projects = projects.filter((item) => item.id != id);
+}
 function makeProject(name) {
   projects.push(new Project(name));
 }
-
+function defaultProject() {
+  if (projects.length === 0) {
+    makeProject("Default Project");
+  }
+}
 function newTodo(title, description, dueDate, priority, isComplete) {
   currentProject().addTodo(
     new Todo(title, description, dueDate, priority, isComplete),
@@ -58,7 +65,7 @@ function newTodo(title, description, dueDate, priority, isComplete) {
 }
 
 //for display testing
-makeProject("First Project");
+makeProject("Default Project");
 makeProject("Second Project");
 const firstProject = projects[0];
 const secondProject = projects[1];
@@ -74,4 +81,11 @@ function createElement(tag, className, text) {
   return element;
 }
 
-export { projects, createElement, newTodo, makeProject };
+export {
+  projects,
+  createElement,
+  newTodo,
+  makeProject,
+  removeProject,
+  defaultProject,
+};
