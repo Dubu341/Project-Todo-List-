@@ -1,0 +1,11 @@
+.layout {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+.projectContainer {
+  background-color: grey;
+}
+.todoContainer {
+  background-color: rgb(184, 184, 236);
+}

@@ -43,6 +43,29 @@ class Project {
   }
 }
 
+let projects = [];
+
+function makeProject(name) {
+  projects.push(new Project(name));
+}
+let index = 0; //changes with evenlistener
+
+function currentProject() {
+  return projects[index];
+}
+
+function addTodo(title, description, dueDate, priority, isComplete) {
+  currentProject().addTodo(
+    new Todo(title, description, dueDate, priority, isComplete),
+  );
+}
 
 
-export { Project, Todo };
+
+// function createElement(tag, className, text) {
+//   let element = document.createElement(tag);
+//   if (className) element.classList.add(className);
+//   if (text) element.textContent = text;
+//   return element;
+// }
+export {};
