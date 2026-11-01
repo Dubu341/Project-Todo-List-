@@ -1,7 +1,18 @@
 import { projects, createElement, addTodo } from "./todo.js";
 import "./styles.css";
 
-const projectContainer = document.querySelector(".projectContainer");
+const projectContainer = document.querySelector(".projects");
+const openFormBtn = document.querySelector(".openForm");
+const expandProjectContainer = document.querySelector(".expandable-container");
+const closeFormBtn = document.querySelector(".close");
+
+openFormBtn.addEventListener("click", () => {
+  expandProjectContainer.classList.add("active");
+});
+closeFormBtn.addEventListener("click", () => {
+  expandProjectContainer.classList.remove("active");
+});
+
 
 let selectedProject = projects[0];
 
