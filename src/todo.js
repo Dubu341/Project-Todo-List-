@@ -18,6 +18,7 @@ class Todo {
   changeIsComplete() {
     this.isComplete = !this.isComplete;
   }
+  removeTodo() {}
 }
 
 class Project {
