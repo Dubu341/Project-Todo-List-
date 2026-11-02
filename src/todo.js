@@ -50,20 +50,31 @@ let projects = [];
 function removeProject(id) {
   projects = projects.filter((item) => item.id != id);
 }
+
 function makeProject(name) {
   projects.push(new Project(name));
 }
+
 function defaultProject() {
   if (projects.length === 0) {
     makeProject("Default Project");
   }
 }
+
 function newTodo(title, description, dueDate, priority, isComplete) {
   currentProject().addTodo(
     new Todo(title, description, dueDate, priority, isComplete),
   );
 }
 
+function removeTodo(todo) {
+  const project = currentProject();
+  project.todos = project.todos.filter((item) => item.id !== todo.id);
+}
+
+function toggleTodo(todo) {
+  todo.changeIsComplete();
+}
 //for display testing
 makeProject("Default Project");
 makeProject("Second Project");
@@ -88,4 +99,6 @@ export {
   makeProject,
   removeProject,
   defaultProject,
+  removeTodo,
+  toggleTodo,
 };

@@ -5,6 +5,8 @@ import {
   makeProject,
   removeProject,
   defaultProject,
+  removeTodo,
+  toggleTodo,
 } from "./todo.js";
 import "./styles.css";
 import { format, parseISO, isValid, isPast, isToday } from "date-fns";
@@ -113,50 +115,39 @@ newTodo(
   true,
 );
 
+function createTodoCard(todo) {
+  const card = createElement("div", "todoCard");
+  const title = createElement("p", "", `Title: ${todo.title}.`);
+  const dueDate = createElement("p", "", formatDueDate(todo.dueDate));
+  const removeBtn = createElement("button", "removeTodo", "Delete");
+  console.log(title);
+  console.log(dueDate);
+  console.log(todo.isComplete);
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.checked = todo.isComplete;
+
+  if (todo.isComplete) card.classList.add("completed");
+  if (isOverdue(todo.dueDate)) dueDate.classList.add("overdue");
+
+  removeBtn.addEventListener("click", () => {
+    removeTodo(todo);
+    displayTodos();
+  });
+
+  checkbox.addEventListener("change", () => {
+    toggleTodo(todo);
+    displayTodos();
+  });
+
+  card.append(title, dueDate, checkbox, removeBtn);
+  return card;
+}
+
 function displayTodos() {
   todosContainer.textContent = "";
   currentProject().todos.forEach((todo) => {
-    const todoCard = createElement("div", "todoCard");
-    const todoTitle = createElement("p", "");
-    const todoDueDate = createElement("p");
-    const removeTodo = createElement("button", "removeTodo", "Delete");
-    const completed = document.createElement("input");
-    completed.type = "checkbox";
-
-    completed.checked = todo.isComplete;
-
-    if (todo.isComplete === true) {
-      todoCard.classList.add("completed");
-    }
-
-    todoTitle.textContent = `Title: ${todo.title}.`;
-    todoDueDate.textContent = formatDueDate(todo.dueDate);
-    if (isOverdue(todo.dueDate)) {
-      todoDueDate.classList.add("overdue");
-    }
-
-    todosContainer.append(todoCard);
-    todoCard.append(todoTitle, todoDueDate, completed, removeTodo);
-
-    todoCard.setAttribute("data-id", todo.id);
-
-    removeTodo.addEventListener("click", () => {
-      let todoId = todoCard.getAttribute("data-id");
-      currentProject().todos = currentProject().todos.filter(
-        (item) => item.id != todoId,
-      );
-      displayTodos();
-    });
-    
-    completed.addEventListener("change", () => {
-      let todoId = todoCard.getAttribute("data-id");
-      let todoIndex = currentProject().todos.findIndex(
-        (item) => item.id == todoId,
-      );
-      currentProject().todos[todoIndex].changeIsComplete();
-
-      displayTodos();
-    });
+    todosContainer.append(createTodoCard(todo));
   });
 }
 displayTodos();
