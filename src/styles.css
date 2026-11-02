@@ -5,6 +5,19 @@
 }
 .projectContainer {
   background-color: grey;
+  padding-top: 10px;
+  display: grid;
+  justify-content: center;
+}
+.projects {
+  grid-row: 2/3;
+}
+.project {
+  display: grid;
+  grid-template-columns: 150px 50px;
+}
+.removeProject {
+  align-self: center;
 }
 .todoContainer {
   background-color: rgb(184, 184, 236);
@@ -27,7 +40,7 @@
   display: block;
   width: 100%;
   margin: 10px 0;
-  padding: 8px;
+  padding: 5px;
 }
 
 .projectExpandable-container.active .hidden {
@@ -54,4 +67,7 @@
 /* hidden form */
 .overdue {
   background-color: red;
+}
+.completed {
+  background-color: rgb(174, 248, 181);
 }

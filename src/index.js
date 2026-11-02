@@ -10,7 +10,7 @@ import {
 } from "./todo.js";
 import "./styles.css";
 import { format, parseISO, isValid, isPast, isToday } from "date-fns";
-
+import editSVG from "../images/editSVG.svg";
 function formatDueDate(dateString) {
   const date = parseISO(dateString);
   if (!isValid(date)) return "No due date";
@@ -78,29 +78,73 @@ function currentProject() {
   return selectedProject;
 }
 
+function createUpdateProjectForm(project) {
+  const editNameForm = createElement("form", "hidden", "");
+  editNameForm.classList.add("editProjectForm");
+  editNameForm.classList.add("editForm");
+  editNameForm.id = "newName";
+  editNameForm.method = "get";
+  editNameForm.action = "";
+  const nameInput = createElement("input");
+  nameInput.type = "text";
+  nameInput.name = "newName";
+  nameInput.placeholder = project.name;
+  nameInput.required = true;
+  const submitBtn = createElement("button", "", "Update");
+  submitBtn.type = "submit";
+  const removeProjectBtn = createElement("button", "", "Delete");
+  removeProjectBtn.type = "button";
+  removeProjectBtn.addEventListener("click", () => {
+    removeProject(project);
+    defaultProject(); //checks if no project in projects is left then makes one
+    selectedProject = projects[0];
+    displayProject();
+    displayTodos();
+  });
+  editNameForm.append(nameInput, submitBtn, removeProjectBtn);
+
+  return editNameForm;
+}
+
 function displayProject() {
   projectContainer.textContent = "";
   projects.forEach((project) => {
     const projectDiv = createElement("div", "project");
-    const removeProjectBtn = createElement("button", "removeProject", "Delete");
+    const projectName = createElement("p", "", project.name);
+    const editProjectBtn = createElement("img", "removeProject", "");
+    editProjectBtn.src = editSVG;
+    const editForm = createUpdateProjectForm(project);
 
-    projectDiv.append(project.name);
+    projectDiv.append(projectName, editProjectBtn, editForm);
 
-    projectDiv.addEventListener("click", () => {
+    projectName.addEventListener("click", () => {
       selectedProject = project;
       console.log(selectedProject.name, project);
       displayTodos();
     });
 
-    removeProjectBtn.addEventListener("click", () => {
-      removeProject(project);
-      defaultProject(); //checks if no project in projects is left then makes one
-      selectedProject = projects[0];
+    editProjectBtn.addEventListener("click", () => {
+      document
+        .querySelectorAll(".editProjectForm:not(.hidden)")
+        .forEach((form) => {
+          if (form !== editForm) {
+            form.classList.add("hidden");
+          }
+        });
+      editForm.classList.toggle("hidden");
+      if (!editForm.classList.contains("hidden")) {
+        editForm.querySelector("input").focus();
+      }
+    });
+    editForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const newName = new FormData(editForm).get("newName");
+      project.name = newName;
+      editForm.classList.add("hidden");
       displayProject();
-      displayTodos();
     });
 
-    projectContainer.append(projectDiv, removeProjectBtn);
+    projectContainer.append(projectDiv);
   });
 }
 displayProject();
@@ -126,7 +170,9 @@ function createTodoCard(todo) {
   checkbox.checked = todo.isComplete;
 
   if (todo.isComplete) card.classList.add("completed");
-  if (isOverdue(todo.dueDate)) dueDate.classList.add("overdue");
+  if (!todo.isComplete) {
+    if (isOverdue(todo.dueDate)) dueDate.classList.add("overdue");
+  }
 
   removeBtn.addEventListener("click", () => {
     removeTodo(todo);
@@ -150,3 +196,7 @@ function displayTodos() {
 }
 displayTodos();
 export { currentProject };
+//button that opens details
+// opens a form
+// form has the values as default
+// has update button and close button
