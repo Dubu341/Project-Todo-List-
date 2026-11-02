@@ -47,8 +47,8 @@ class Project {
 
 let projects = [];
 
-function removeProject(id) {
-  projects = projects.filter((item) => item.id != id);
+function removeProject(project) {
+  projects = projects.filter((item) => item.id !== project.id);
 }
 
 function makeProject(name) {

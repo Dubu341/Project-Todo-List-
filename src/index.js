@@ -85,7 +85,6 @@ function displayProject() {
     const removeProjectBtn = createElement("button", "removeProject", "Delete");
 
     projectDiv.append(project.name);
-    projectDiv.setAttribute("data-id", project.id);
 
     projectDiv.addEventListener("click", () => {
       selectedProject = project;
@@ -94,8 +93,7 @@ function displayProject() {
     });
 
     removeProjectBtn.addEventListener("click", () => {
-      let projectId = projectDiv.getAttribute("data-id");
-      removeProject(projectId);
+      removeProject(project);
       defaultProject(); //checks if no project in projects is left then makes one
       selectedProject = projects[0];
       displayProject();
