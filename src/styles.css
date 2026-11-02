@@ -11,7 +11,7 @@
 }
 
 /* hidden form */
-.expandable-container {
+.projectExpandable-container {
   max-width: 300px;
 }
 .hidden {
@@ -30,13 +30,13 @@
   padding: 8px;
 }
 
-.expandable-container.active .hidden {
+.projectExpandable-container.active .hidden {
   max-height: 300px;
   opacity: 1;
   padding: 15px;
   border-color: #ddd;
 }
-.expandable-container.active .openForm {
+.projectExpandable-container.active .openForm {
   display: none;
 }
 /* hidden form */

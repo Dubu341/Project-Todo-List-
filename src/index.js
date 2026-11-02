@@ -9,26 +9,31 @@ import {
 import "./styles.css";
 
 const projectContainer = document.querySelector(".projects");
-const todosContainer = document.querySelector(".todoContainer");
-const openFormBtn = document.querySelector(".openForm");
-const expandProjectContainer = document.querySelector(".expandable-container");
-const closeFormBtn = document.querySelector(".close");
-const form = document.querySelector("form");
+const todosContainer = document.querySelector(".todoCard");
+const projectOpenFormBtn = document.querySelector(".projectOpenForm");
+const todoOpenFormBtn = document.querySelector(".todoOpenForm");
+const expandProjectContainer = document.querySelector(
+  ".projectExpandable-container",
+);
+const expandTodoContainer = document.querySelector(".todoExpandable-container");
+const projectCloseFormBtn = document.querySelector(".projectClose");
+const todoCloseFormBtn = document.querySelector(".todoClose");
+const projectForm = document.querySelector(".projectForm");
 
-openFormBtn.addEventListener("click", () => {
+projectOpenFormBtn.addEventListener("click", () => {
   expandProjectContainer.classList.add("active");
 });
-closeFormBtn.addEventListener("click", () => {
+projectCloseFormBtn.addEventListener("click", () => {
   expandProjectContainer.classList.remove("active");
 });
 
-form.addEventListener("submit", (event) => {
+projectForm.addEventListener("submit", (event) => {
   event.preventDefault();
   expandProjectContainer.classList.remove("active");
-  const projectName = new FormData(form).get("newProject");
+  const projectName = new FormData(projectForm).get("newProject");
   makeProject(projectName);
   displayProject();
-  form.reset();
+  projectForm.reset();
 });
 
 let selectedProject = projects[0];
@@ -55,7 +60,7 @@ function displayProject() {
     removeProjectBtn.addEventListener("click", () => {
       let projectId = projectDiv.getAttribute("data-id");
       removeProject(projectId);
-      defaultProject();
+      defaultProject(); //checks if no project in projects is left then makes one
       selectedProject = projects[0];
       displayProject();
       displayTodos();
@@ -95,5 +100,5 @@ function displayTodos() {
   });
 }
 displayTodos();
-
+//to do add todo functions
 export { currentProject };
