@@ -69,9 +69,9 @@ makeProject("Default Project");
 makeProject("Second Project");
 const firstProject = projects[0];
 const secondProject = projects[1];
-secondProject.addTodo(new Todo("test", "testtesttest", "11/11/1111", "high"));
-secondProject.addTodo(new Todo("test1", "testtesttest1", "22/11/1111", "high"));
-firstProject.addTodo(new Todo("test1", "testtesttest1", "22/11/1111", "high"));
+secondProject.addTodo(new Todo("test", "testtesttest", "2030-12-01", "high"));
+secondProject.addTodo(new Todo("test1", "testtesttest1", "2022-05-05", "high"));
+firstProject.addTodo(new Todo("test1", "testtesttest1", "2026-11-02", "high"));
 //for display testing
 
 function createElement(tag, className, text) {

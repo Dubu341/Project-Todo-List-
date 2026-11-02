@@ -7,6 +7,18 @@ import {
   defaultProject,
 } from "./todo.js";
 import "./styles.css";
+import { format, parseISO, isValid, isPast, isToday } from "date-fns";
+
+function formatDueDate(dateString) {
+  const date = parseISO(dateString);
+  if (!isValid(date)) return "No due date";
+  return format(date, "dd/MM/yyyy");
+}
+
+function isOverdue(dateString) {
+  const date = parseISO(dateString);
+  return isValid(date) && isPast(date) && !isToday(date);
+}
 
 const projectContainer = document.querySelector(".projects");
 const todosContainer = document.querySelector(".todoCard");
@@ -15,16 +27,26 @@ const todoOpenFormBtn = document.querySelector(".todoOpenForm");
 const expandProjectContainer = document.querySelector(
   ".projectExpandable-container",
 );
+
 const expandTodoContainer = document.querySelector(".todoExpandable-container");
 const projectCloseFormBtn = document.querySelector(".projectClose");
 const todoCloseFormBtn = document.querySelector(".todoClose");
 const projectForm = document.querySelector(".projectForm");
-
+const todoForm = document.querySelector(".todoForm");
 projectOpenFormBtn.addEventListener("click", () => {
   expandProjectContainer.classList.add("active");
 });
+
 projectCloseFormBtn.addEventListener("click", () => {
   expandProjectContainer.classList.remove("active");
+});
+
+todoOpenFormBtn.addEventListener("click", () => {
+  expandTodoContainer.classList.add("active");
+});
+
+todoCloseFormBtn.addEventListener("click", () => {
+  expandTodoContainer.classList.remove("active");
 });
 
 projectForm.addEventListener("submit", (event) => {
@@ -34,6 +56,18 @@ projectForm.addEventListener("submit", (event) => {
   makeProject(projectName);
   displayProject();
   projectForm.reset();
+});
+
+todoForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  expandTodoContainer.classList.remove("active");
+  const todoName = new FormData(todoForm).get("todoName");
+  const todoDescription = new FormData(todoForm).get("description");
+  const todoDueDate = new FormData(todoForm).get("dueDate");
+  const todoPriority = new FormData(todoForm).get("importance");
+  newTodo(todoName, todoDescription, todoDueDate, todoPriority);
+  displayTodos();
+  todoForm.reset();
 });
 
 let selectedProject = projects[0];
@@ -74,7 +108,7 @@ displayProject();
 newTodo(
   "Meeting",
   "team sync to review progress and next steps",
-  "11/12/1999",
+  "1999-11-12",
   "a",
   true,
 );
@@ -83,10 +117,20 @@ function displayTodos() {
   todosContainer.textContent = "";
   currentProject().todos.forEach((todo) => {
     const todoCard = createElement("div", "todoCard");
+    const todoTitle = createElement("p", "");
+    const todoDescription = createElement("p");
+    const todoDueDate = createElement("p");
     const removeTodo = createElement("button", "removeTodo", "Delete");
 
+    todoTitle.textContent = `Title: ${todo.title}.`;
+    todoDescription.textContent = `Description: ${todo.description}.`;
+    todoDueDate.textContent = formatDueDate(todo.dueDate);
+    if (isOverdue(todo.dueDate)) {
+      todoDueDate.classList.add("overdue");
+    }
+
     todosContainer.append(todoCard);
-    todoCard.append(todo.title, todo.dueDate, removeTodo);
+    todoCard.append(todoTitle, todoDescription, todoDueDate, removeTodo);
 
     todoCard.setAttribute("data-id", todo.id);
 
@@ -100,5 +144,4 @@ function displayTodos() {
   });
 }
 displayTodos();
-//to do add todo functions
 export { currentProject };

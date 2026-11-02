@@ -36,7 +36,22 @@
   padding: 15px;
   border-color: #ddd;
 }
-.projectExpandable-container.active .openForm {
+.projectExpandable-container.active .projectOpenForm {
+  display: none;
+}
+.todoExpandable-container {
+  max-width: 300px;
+}
+.todoExpandable-container.active .hidden {
+  max-height: 600px;
+  opacity: 1;
+  padding: 15px;
+  border-color: #ddd;
+}
+.todoExpandable-container.active .todoOpenForm {
   display: none;
 }
 /* hidden form */
+.overdue {
+  background-color: red;
+}

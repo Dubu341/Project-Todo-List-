@@ -11,8 +11,8 @@
         <div class="projectExpandable-container">
           <button class="projectOpenForm">Add Project</button>
           <form action="" method="get" class="hidden projectForm">
-            <span>New Project: </span>
-            <input type="text" name="newProject" id="newProject" />
+            <h3>New Project:</h3>
+            <input type="text" name="newProject" id="newProject" required />
             <button type="submit">Add</button>
             <button type="button" class="projectClose">Close</button>
           </form>
@@ -20,6 +20,22 @@
         <div class="projects"></div>
       </div>
       <div class="todoContainer">
+        <div class="todoExpandable-container">
+          <button class="todoOpenForm">Create new Todo</button>
+          <form action="" method="get" class="hidden todoForm">
+            <h3>New Todo:</h3>
+            <label for="todoName">Title:</label>
+            <input type="text" name="todoName" id="todoName" required />
+            <label for="description">Description:</label>
+            <input type="text" name="description" id="description" />
+            <label for="dueDate">Due Date:</label>
+            <input type="date" name="dueDate" id="dueDate" />
+            <label for="importance">Mark as important:</label>
+            <input type="checkbox" name="importance" id="importance" />
+            <button type="submit">Add</button>
+            <button type="button" class="todoClose">Close</button>
+          </form>
+        </div>
         <div class="todoCard"></div>
       </div>
     </div>
