@@ -118,19 +118,25 @@ function displayTodos() {
   currentProject().todos.forEach((todo) => {
     const todoCard = createElement("div", "todoCard");
     const todoTitle = createElement("p", "");
-    const todoDescription = createElement("p");
     const todoDueDate = createElement("p");
     const removeTodo = createElement("button", "removeTodo", "Delete");
+    const completed = document.createElement("input");
+    completed.type = "checkbox";
+
+    completed.checked = todo.isComplete;
+
+    if (todo.isComplete === true) {
+      todoCard.classList.add("completed");
+    }
 
     todoTitle.textContent = `Title: ${todo.title}.`;
-    todoDescription.textContent = `Description: ${todo.description}.`;
     todoDueDate.textContent = formatDueDate(todo.dueDate);
     if (isOverdue(todo.dueDate)) {
       todoDueDate.classList.add("overdue");
     }
 
     todosContainer.append(todoCard);
-    todoCard.append(todoTitle, todoDescription, todoDueDate, removeTodo);
+    todoCard.append(todoTitle, todoDueDate, completed, removeTodo);
 
     todoCard.setAttribute("data-id", todo.id);
 
@@ -139,6 +145,16 @@ function displayTodos() {
       currentProject().todos = currentProject().todos.filter(
         (item) => item.id != todoId,
       );
+      displayTodos();
+    });
+    
+    completed.addEventListener("change", () => {
+      let todoId = todoCard.getAttribute("data-id");
+      let todoIndex = currentProject().todos.findIndex(
+        (item) => item.id == todoId,
+      );
+      currentProject().todos[todoIndex].changeIsComplete();
+
       displayTodos();
     });
   });
