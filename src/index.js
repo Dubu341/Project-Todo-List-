@@ -82,6 +82,9 @@ function currentProject() {
 
 function createUpdateProjectForm(project) {
   const editNameForm = createElement("form", "", "");
+  editNameForm.addEventListener("click", (event) => {
+    event.stopPropagation();
+  });
   editNameForm.classList.add("editProjectForm");
   editNameForm.id = "newName";
   editNameForm.method = "get";
