@@ -5,11 +5,20 @@ import { formatDueDate, isOverdue } from "./index.js";
 const container = document.querySelector(".todoContainer");
 const todosContainer = document.querySelector(".todoCard");
 const todoOpenFormBtn = document.querySelector(".todoOpenForm");
-todoOpenFormBtn.addEventListener("click", () => {
+let formOpen = false;
+todoOpenFormBtn.addEventListener("click", (event) => {
+  event.stopPropagation();
+
+  if (formOpen) return;
+  formOpen = true;
   createTodoForm();
 });
+
 function createTodoForm() {
   const Formcontainer = createElement("div", "todoExpandable-container");
+  Formcontainer.addEventListener("click", (event) => {
+    event.stopPropagation();
+  });
   const form = createElement("form", "todoForm");
   form.method = "get";
   form.action = "";
@@ -61,6 +70,7 @@ function createTodoForm() {
   );
   closeBtn.addEventListener("click", () => {
     Formcontainer.remove();
+    formOpen = false;
   });
 
   form.addEventListener("submit", (event) => {
@@ -72,6 +82,12 @@ function createTodoForm() {
     newTodo(todoName, todoDescription, todoDueDate, todoPriority);
     displayTodos();
     form.reset();
+    Formcontainer.remove();
+    formOpen = false;
+  });
+  document.addEventListener("click", () => {
+    Formcontainer.remove();
+    formOpen = false;
   });
 }
 
