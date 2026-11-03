@@ -113,13 +113,7 @@ let closeOpenProjectForm = null;
 
 document.addEventListener("click", (event) => {
   if (!closeOpenProjectForm) return;
-
-  const clickedInsideForm = event.target.closest(".editProjectForm");
-  const clickedEdit = event.target.closest(".editProject");
-
-  if (!clickedInsideForm && !clickedEdit) {
-    closeOpenProjectForm();
-  }
+  closeOpenProjectForm();
 });
 function displayProject() {
   closeOpenProjectForm = null;

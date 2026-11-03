@@ -119,7 +119,7 @@ button {
 .selectedProject {
   background-color: #c8693f;
 }
-.project:hover {
+.project:not(.selectedProject):hover {
   background-color: #ecdcbc;
   border: 1px solid white;
 }
