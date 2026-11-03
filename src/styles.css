@@ -105,6 +105,9 @@ button {
 .project p {
   font-size: 1.1rem;
   color: #2a2016;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .project {
   border: 1px solid black;
