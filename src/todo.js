@@ -1,4 +1,4 @@
-import { currentProject } from "./index.js";
+import { currentProject } from "./displayProjects.js";
 class Todo {
   constructor(
     title,
