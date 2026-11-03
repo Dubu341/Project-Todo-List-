@@ -14,7 +14,7 @@
 }
 .project {
   display: grid;
-  grid-template-columns: 150px 50px;
+  grid-template-columns: 200px 50px;
 }
 .removeProject {
   align-self: center;

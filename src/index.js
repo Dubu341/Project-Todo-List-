@@ -88,7 +88,6 @@ function createUpdateProjectForm(project) {
   const nameInput = createElement("input");
   nameInput.type = "text";
   nameInput.name = "newName";
-  nameInput.value = project.name;
   nameInput.required = true;
   const submitBtn = createElement("button", "", "Update");
   submitBtn.type = "submit";
@@ -106,14 +105,28 @@ function createUpdateProjectForm(project) {
   return editNameForm;
 }
 
+let closeOpenProjectForm = null;
+
+document.addEventListener("click", (event) => {
+  if (!closeOpenProjectForm) return;
+
+  const clickedInsideForm = event.target.closest(".editProjectForm");
+  const clickedEdit = event.target.closest(".editProject");
+
+  if (!clickedInsideForm && !clickedEdit) {
+    closeOpenProjectForm();
+  }
+});
 function displayProject() {
+  closeOpenProjectForm = null;
   projectContainer.textContent = "";
   projects.forEach((project) => {
     const projectDiv = createElement("div", "project");
     const projectName = createElement("p", "", project.name);
-    const editProjectBtn = createElement("img", "removeProject", "");
+    const editProjectBtn = createElement("img", "editProject", "");
     editProjectBtn.src = editSVG;
     const editForm = createUpdateProjectForm(project);
+    const input = editForm.querySelector("input");
 
     projectDiv.append(projectName, editProjectBtn);
 
@@ -123,20 +136,26 @@ function displayProject() {
       displayTodos();
     });
 
+    function closeThisForm() {
+      editForm.replaceWith(projectName);
+      projectName.after(editProjectBtn);
+      closeOpenProjectForm = null;
+    }
+
     editProjectBtn.addEventListener("click", () => {
+      input.value = project.name;
+      if (closeOpenProjectForm) closeOpenProjectForm();
       projectName.replaceWith(editForm);
-      editForm.querySelector("input").focus();
-      editForm.querySelector("input").select();
-      editProjectBtn.remove();
+      input.focus();
+      input.select();
+      closeOpenProjectForm = closeThisForm;
     });
     editForm.addEventListener("submit", (event) => {
       event.preventDefault();
       const newName = new FormData(editForm).get("newName");
       project.name = newName;
-      editForm.classList.add("hidden");
       displayProject();
     });
-
     projectContainer.append(projectDiv);
   });
 }
