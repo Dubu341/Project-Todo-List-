@@ -79,7 +79,7 @@ function currentProject() {
 }
 
 function createUpdateProjectForm(project) {
-  const editNameForm = createElement("form", "hidden", "");
+  const editNameForm = createElement("form", "", "");
   editNameForm.classList.add("editProjectForm");
   editNameForm.classList.add("editForm");
   editNameForm.id = "newName";
@@ -88,7 +88,7 @@ function createUpdateProjectForm(project) {
   const nameInput = createElement("input");
   nameInput.type = "text";
   nameInput.name = "newName";
-  nameInput.placeholder = project.name;
+  nameInput.value = project.name;
   nameInput.required = true;
   const submitBtn = createElement("button", "", "Update");
   submitBtn.type = "submit";
@@ -115,7 +115,7 @@ function displayProject() {
     editProjectBtn.src = editSVG;
     const editForm = createUpdateProjectForm(project);
 
-    projectDiv.append(projectName, editProjectBtn, editForm);
+    projectDiv.append(projectName, editProjectBtn);
 
     projectName.addEventListener("click", () => {
       selectedProject = project;
@@ -124,17 +124,10 @@ function displayProject() {
     });
 
     editProjectBtn.addEventListener("click", () => {
-      document
-        .querySelectorAll(".editProjectForm:not(.hidden)")
-        .forEach((form) => {
-          if (form !== editForm) {
-            form.classList.add("hidden");
-          }
-        });
-      editForm.classList.toggle("hidden");
-      if (!editForm.classList.contains("hidden")) {
-        editForm.querySelector("input").focus();
-      }
+      projectName.replaceWith(editForm);
+      editForm.querySelector("input").focus();
+      editForm.querySelector("input").select();
+      editProjectBtn.remove();
     });
     editForm.addEventListener("submit", (event) => {
       event.preventDefault();
