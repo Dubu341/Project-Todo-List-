@@ -35,8 +35,10 @@ const projectCloseFormBtn = document.querySelector(".projectClose");
 const todoCloseFormBtn = document.querySelector(".todoClose");
 const projectForm = document.querySelector(".projectForm");
 const todoForm = document.querySelector(".todoForm");
+
 projectOpenFormBtn.addEventListener("click", () => {
   expandProjectContainer.classList.add("active");
+  projectForm.querySelector("input").focus();
 });
 
 projectCloseFormBtn.addEventListener("click", () => {
@@ -81,7 +83,6 @@ function currentProject() {
 function createUpdateProjectForm(project) {
   const editNameForm = createElement("form", "", "");
   editNameForm.classList.add("editProjectForm");
-  editNameForm.classList.add("editForm");
   editNameForm.id = "newName";
   editNameForm.method = "get";
   editNameForm.action = "";
@@ -128,12 +129,17 @@ function displayProject() {
     const editForm = createUpdateProjectForm(project);
     const input = editForm.querySelector("input");
 
+    if (project.id === currentProject().id) {
+      projectDiv.classList.add("selectedProject");
+    }
+
     projectDiv.append(projectName, editProjectBtn);
 
-    projectName.addEventListener("click", () => {
+    projectDiv.addEventListener("click", () => {
       selectedProject = project;
       console.log(selectedProject.name, project);
       displayTodos();
+      displayProject();
     });
 
     function closeThisForm() {
@@ -142,12 +148,13 @@ function displayProject() {
       closeOpenProjectForm = null;
     }
 
-    editProjectBtn.addEventListener("click", () => {
+    editProjectBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      editProjectBtn.remove();
       input.value = project.name;
       if (closeOpenProjectForm) closeOpenProjectForm();
       projectName.replaceWith(editForm);
       input.focus();
-      input.select();
       closeOpenProjectForm = closeThisForm;
     });
     editForm.addEventListener("submit", (event) => {

@@ -4,17 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TODO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div class="layout">
       <div class="projectContainer">
-        <h2>Projects</h2>
+        <h2>Projects:</h2>
         <div class="projectExpandable-container">
-          <button class="projectOpenForm">Add Project</button>
+          <div class="projectOpenForm">Create new Project</div>
           <form action="" method="get" class="hidden projectForm">
             <h3>New Project:</h3>
             <input type="text" name="newProject" id="newProject" required />
-            <button type="submit">Add</button>
+            <button type="submit">Create</button>
             <button type="button" class="projectClose">Close</button>
           </form>
         </div>
@@ -33,7 +39,7 @@
             <input type="date" name="dueDate" id="dueDate" />
             <label for="importance">Mark as important:</label>
             <input type="checkbox" name="importance" id="importance" />
-            <button type="submit">Add</button>
+            <button type="submit">Create</button>
             <button type="button" class="todoClose">Close</button>
           </form>
         </div>

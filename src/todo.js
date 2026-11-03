@@ -77,6 +77,7 @@ function toggleTodo(todo) {
 //for display testing
 makeProject("Default Project");
 makeProject("Second Project");
+makeProject("Third Project");
 const firstProject = projects[0];
 const secondProject = projects[1];
 secondProject.addTodo(new Todo("test", "testtesttest", "2030-12-01", "high"));

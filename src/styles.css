@@ -1,23 +1,164 @@
+/* A Modern CSS Reset:https://www.joshwcomeau.com/css/custom-css-reset/ */
+/* 1. Use a more-intuitive box-sizing model */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+*:not(dialog) {
+  margin: 0;
+}
+
+body {
+  /* 4. Increase line-height */
+  line-height: 1.5;
+  /* 5. Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+  font-family: "Google Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+  font-variation-settings: "GRAD" 0;
+  background-color: #3b2f23;
+}
+
+/* 6. Improve media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 7. Inherit fonts for form controls */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* 8. Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* 9. Improve line wrapping */
+p {
+  text-wrap: pretty;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+/*
+  10. Create a root stacking context
+*/
+#root,
+#__next {
+  isolation: isolate;
+}
+h2,
+h3 {
+  color: #d9c6a5;
+}
+button {
+  padding: 5px;
+  cursor: pointer;
+}
 .layout {
   height: 100vh;
   display: grid;
   grid-template-columns: 400px 2fr;
+  padding-left: 100px;
 }
 .projectContainer {
-  background-color: grey;
+  background-color: #3b2f23;
   padding-top: 10px;
   display: grid;
   justify-content: center;
+  align-content: start;
+  grid-template-rows: 50px auto 150px;
+  row-gap: 5px;
 }
 .projects {
+  max-width: 210px;
   grid-row: 2/3;
+  display: grid;
+  row-gap: 5px;
+}
+.project p {
+  font-size: 1.1rem;
+  color: #2a2016;
 }
 .project {
+  border: 1px solid black;
+  align-items: center;
+  background-color: #d9c6a5;
+  padding: 12px 20px;
+  font-size: 15px;
+  cursor: pointer;
   display: grid;
-  grid-template-columns: 200px 50px;
+  grid-template-columns: 1fr 30px;
 }
-.removeProject {
-  align-self: center;
+.selectedProject {
+  background-color: #c8693f;
+}
+.project:hover {
+  background-color: #ecdcbc;
+  border: 1px solid white;
+}
+.project.active {
+  background-color: #c8693f;
+}
+.editProject {
+  width: 30px;
+  padding: 2px;
+  border: 1px solid white;
+  background-color: #f1e6d3;
+}
+.editProject:hover {
+  background-color: #b9af9e;
+  border: 2px solid white;
+}
+.editProjectForm {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+  row-gap: 4px;
+}
+.editProjectForm input {
+  font-family: inherit;
+  padding: 5px;
+  outline: none;
+  grid-column: 1 / -1;
+}
+.editProjectForm button {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.projectOpenForm {
+  background-color: #5a4632;
+  color: #f4ead7;
+  padding: 16px 20px;
+  font-size: 15px;
+  cursor: pointer;
 }
 .todoContainer {
   background-color: rgb(184, 184, 236);
@@ -25,7 +166,7 @@
 
 /* hidden form */
 .projectExpandable-container {
-  max-width: 300px;
+  max-width: 210px;
 }
 .hidden {
   max-height: 0;
@@ -47,7 +188,7 @@
   max-height: 300px;
   opacity: 1;
   padding: 15px;
-  border-color: #ddd;
+  background-color: #5a4632;
 }
 .projectExpandable-container.active .projectOpenForm {
   display: none;
