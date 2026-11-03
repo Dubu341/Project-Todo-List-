@@ -2,31 +2,78 @@ import { newTodo, removeTodo, toggleTodo, createElement } from "./todo.js";
 import { currentProject } from "./displayProjects.js";
 import { formatDueDate, isOverdue } from "./index.js";
 
+const container = document.querySelector(".todoContainer");
 const todosContainer = document.querySelector(".todoCard");
 const todoOpenFormBtn = document.querySelector(".todoOpenForm");
-
-const expandTodoContainer = document.querySelector(".todoExpandable-container");
-const todoCloseFormBtn = document.querySelector(".todoClose");
-const todoForm = document.querySelector(".todoForm");
 todoOpenFormBtn.addEventListener("click", () => {
-  expandTodoContainer.classList.add("active");
+  createTodoForm();
 });
+function createTodoForm() {
+  const Formcontainer = createElement("div", "todoExpandable-container");
+  const form = createElement("form", "todoForm");
+  form.method = "get";
+  form.action = "";
+  const header = createElement("h3", "", "New Todo:");
+  const nameLabel = createElement("label", "", "Title:");
+  nameLabel.htmlFor = "todoName";
+  const nameInput = createElement("input");
+  nameInput.type = "text";
+  nameInput.name = "todoName";
+  nameInput.id = "todoName";
+  nameInput.required = true;
+  const desLabel = createElement("label", "", "Description:");
+  desLabel.htmlFor = "description";
+  const desInput = createElement("input");
+  desInput.type = "text";
+  desInput.name = "description";
+  desInput.id = "description";
+  const dateLabel = createElement("label", "", "Due Date:");
+  dateLabel.htmlFor = "dueDate";
+  const dateInput = createElement("input");
+  dateInput.type = "date";
+  dateInput.name = "dueDate";
+  dateInput.id = "dueDate";
+  const importanceLabel = createElement("label", "", "Mark as important:");
+  importanceLabel.htmlFor = "importance";
+  const importanceInput = createElement("input");
+  importanceInput.type = "checkbox";
+  importanceInput.name = "importance";
+  importanceInput.id = "importance";
+  const submitBtn = createElement("button", "", "Create");
+  submitBtn.type = "submit";
+  const closeBtn = createElement("button", "todoClose", "Close");
+  container.append(Formcontainer);
+  Formcontainer.append(form);
+  todosContainer.before(Formcontainer);
+  Formcontainer.before(todoOpenFormBtn);
+  form.append(
+    header,
+    nameLabel,
+    nameInput,
+    desLabel,
+    desInput,
+    dateLabel,
+    dateInput,
+    importanceLabel,
+    importanceInput,
+    submitBtn,
+    closeBtn,
+  );
+  closeBtn.addEventListener("click", () => {
+    Formcontainer.remove();
+  });
 
-todoCloseFormBtn.addEventListener("click", () => {
-  expandTodoContainer.classList.remove("active");
-});
-
-todoForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  expandTodoContainer.classList.remove("active");
-  const todoName = new FormData(todoForm).get("todoName");
-  const todoDescription = new FormData(todoForm).get("description");
-  const todoDueDate = new FormData(todoForm).get("dueDate");
-  const todoPriority = new FormData(todoForm).get("importance");
-  newTodo(todoName, todoDescription, todoDueDate, todoPriority);
-  displayTodos();
-  todoForm.reset();
-});
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const todoName = new FormData(form).get("todoName");
+    const todoDescription = new FormData(form).get("description");
+    const todoDueDate = new FormData(form).get("dueDate");
+    const todoPriority = new FormData(form).get("importance");
+    newTodo(todoName, todoDescription, todoDueDate, todoPriority);
+    displayTodos();
+    form.reset();
+  });
+}
 
 function createTodoCard(todo) {
   const card = createElement("div", "todoCard");
