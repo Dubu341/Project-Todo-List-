@@ -188,7 +188,6 @@ button {
   border: 1px solid #5a4632;
 }
 
-
 .todoExpandable-container form {
   padding: 5px;
   background-color: #5a4632;
@@ -212,6 +211,76 @@ button {
   grid-column: 2/3;
   display: flex;
   gap: 5px;
+}
+
+.todoCard {
+  margin-top: 10px;
+  width: 500px;
+  display: grid;
+  gap: 3px;
+}
+.todoCard div {
+  background-color: #fbf6ec;
+  border: 1px solid #d9c6a5;
+  padding: 15px;
+  display: grid;
+  grid-template-columns: 50px 1fr;
+}
+.todo:hover {
+  cursor: pointer;
+  background-color: #efe3cb;
+}
+.todo > p:first-child {
+  color: #2a2016;
+  font-size: 1.1rem;
+}
+.todo :nth-child(2) {
+  grid-column: 2/3;
+  font-size: 0.9rem;
+  padding-left: 7px;
+
+  color: #6b5a45;
+}
+.checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 28px;
+  height: 28px;
+  background-color: #f4ead7;
+  border: 1px solid #d9c6a5;
+  cursor: pointer;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s;
+  grid-row: 1/3;
+  place-self: center;
+}
+
+.checkbox:hover {
+  background-color: #b9af9e;
+}
+.checkbox:checked {
+  background-color: #c8693f;
+  border-color: #c8693f;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f4ead7' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E"); /* woah you can link links directly cool*/
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 70%;
+}
+.checkbox:focus-visible {
+  outline: 2px solid #c8693f;
+  outline-offset: 2px;
+}
+.overdue {
+  border-left: 5px solid #ff0000 !important;
+}
+.overdueDate {
+  background-color: #f87e7e;
+  width: 90px;
+}
+.completed {
+  text-decoration-line: line-through;
+  background-color: #c9d6b5 !important;
 }
 /* hidden form */
 .projectExpandable-container {
@@ -243,10 +312,3 @@ button {
   display: none;
 }
 /* hidden form */
-
-.overdue {
-  background-color: red;
-}
-.completed {
-  background-color: rgb(174, 248, 181);
-}

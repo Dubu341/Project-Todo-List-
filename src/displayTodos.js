@@ -92,7 +92,7 @@ function createTodoForm() {
 }
 
 function createTodoCard(todo) {
-  const card = createElement("div", "todoCard");
+  const card = createElement("div", "todo");
   const title = createElement("p", "", `Title: ${todo.title}.`);
   const dueDate = createElement("p", "", formatDueDate(todo.dueDate));
   const removeBtn = createElement("button", "removeTodo", "Delete");
@@ -101,11 +101,13 @@ function createTodoCard(todo) {
   console.log(todo.isComplete);
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
+  checkbox.classList.add("checkbox");
   checkbox.checked = todo.isComplete;
 
   if (todo.isComplete) card.classList.add("completed");
   if (!todo.isComplete) {
-    if (isOverdue(todo.dueDate)) dueDate.classList.add("overdue");
+    if (isOverdue(todo.dueDate))
+      (card.classList.add("overdue"), dueDate.classList.add("overdueDate"));
   }
 
   removeBtn.addEventListener("click", () => {
@@ -118,7 +120,7 @@ function createTodoCard(todo) {
     displayTodos();
   });
 
-  card.append(title, dueDate, checkbox, removeBtn);
+  card.append(title, dueDate, checkbox); //, removeBtn
   return card;
 }
 
