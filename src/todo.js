@@ -118,7 +118,7 @@ firstProject.addTodo(
 firstProject.addTodo(
   new Todo(
     "Backup Important Files",
-    "	Create a backup of important documents and personal data.",
+    "Create a backup of important documents and personal data.",
     "2030-11-02",
     true,
   ),
