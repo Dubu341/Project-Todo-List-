@@ -8,22 +8,27 @@ const todosContainer = document.querySelector(".todoCard");
 const todoOpenFormBtn = document.querySelector(".todoOpenForm");
 const Formcontainer = document.querySelector(".todoExpandable-container");
 
-let formOpen = false;
+let closeOpenForm = null;
+document.addEventListener("click", () => {
+  if (closeOpenForm) closeOpenForm();
+});
+Formcontainer.addEventListener("click", (event) => {
+  event.stopPropagation();
+});
 
 todoOpenFormBtn.addEventListener("click", (event) => {
-  if (formOpen) return;
-  formOpen = true;
   event.stopPropagation();
+  if (closeOpenForm) closeOpenForm();
   createTodoForm();
 });
 
 function createTodoForm(todo) {
-  Formcontainer.addEventListener("click", (event) => {
-    event.stopPropagation();
-  });
   const form = createElement("form", "todoForm");
   form.method = "get";
   form.action = "";
+  form.addEventListener("click", (event) => {
+    event.stopPropagation();
+  });
   const header = createElement("h3", "", "New Todo:");
   const nameLabel = createElement("label", "", "Title:");
   nameLabel.htmlFor = "todoName";
@@ -53,44 +58,35 @@ function createTodoForm(todo) {
   const submitBtn = createElement("button", "", "Create");
   submitBtn.type = "submit";
   const closeBtn = createElement("button", "todoClose", "Close");
+  closeBtn.type = "button";
 
-  closeBtn.addEventListener("click", () => {
+  function closeThisForm() {
     form.remove();
-    formOpen = false;
-  });
-  document.addEventListener("click", () => {
-    form.remove();
-    formOpen = false;
-  });
+    closeOpenForm = null;
+  }
+  closeBtn.addEventListener("click", closeThisForm);
+
   if (todo) {
     header.textContent = "";
     btnWrapper.classList.remove("formBtnWrapper");
     btnWrapper.classList.add("updateBtnWrapper");
-    form.addEventListener("click", (event) => {
-      event.stopPropagation();
-    });
     form.classList.remove("todoForm");
     form.classList.add("updateTodoForm");
     form.addEventListener("click", (event) => {
       event.stopPropagation();
     });
-    document.addEventListener("click", () => {
-      formOpen = false;
-    });
-    closeBtn.addEventListener("click", () => {
-      formOpen = false;
-    });
+
     nameInput.value = todo.title;
     desInput.value = todo.description;
     dateInput.value = todo.dueDate;
     importanceInput.checked = todo.priority;
     submitBtn.textContent = "update";
-    closeBtn.remove();
     const removeBtn = createElement("button", "removeTodo", "Delete");
+    removeBtn.type = "button";
     removeBtn.addEventListener("click", () => {
       removeTodo(todo);
+      closeThisForm();
       displayTodos();
-      formOpen = false;
     });
     btnWrapper.append(submitBtn, removeBtn);
     form.append(
@@ -105,50 +101,46 @@ function createTodoForm(todo) {
       importanceInput,
       btnWrapper,
     );
+    closeOpenForm = closeThisForm;
     return form;
   }
 
-  if (!todo) {
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const todoName = new FormData(form).get("todoName");
-      const todoDescription = new FormData(form).get("description");
-      const todoDueDate = new FormData(form).get("dueDate");
-      const todoPriority = new FormData(form).get("importance");
-      newTodo(todoName, todoDescription, todoDueDate, todoPriority);
-      displayTodos();
-      form.reset();
-      form.remove();
-      formOpen = false;
-    });
-    container.append(Formcontainer);
-    Formcontainer.append(form);
-    todosContainer.before(Formcontainer);
-    btnWrapper.append(submitBtn, closeBtn);
-    form.append(
-      header,
-      nameLabel,
-      nameInput,
-      desLabel,
-      desInput,
-      dateLabel,
-      dateInput,
-      importanceLabel,
-      importanceInput,
-      btnWrapper,
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    newTodo(
+      data.get("todoName"),
+      data.get("description"),
+      data.get("dueDate"),
+      data.get("importance"),
     );
-  }
+    displayTodos();
+    closeThisForm();
+  });
+  container.append(Formcontainer);
+  Formcontainer.append(form);
+  todosContainer.before(Formcontainer);
+  btnWrapper.append(submitBtn, closeBtn);
+  form.append(
+    header,
+    nameLabel,
+    nameInput,
+    desLabel,
+    desInput,
+    dateLabel,
+    dateInput,
+    importanceLabel,
+    importanceInput,
+    btnWrapper,
+  );
+  closeOpenForm = closeThisForm;
 }
 
 function createTodoCard(todo) {
   const card = createElement("div", "todo");
   const title = createElement("p", "", `Title: ${todo.title}`);
   const dueDate = createElement("p", "dueDate", formatDueDate(todo.dueDate));
-  const desc = createElement(
-    "p",
-    "todoDescription",
-    `${todo.description}`,
-  );
+  const desc = createElement("p", "todoDescription", `${todo.description}`);
   const updateBtn = createElement("img", "updateTodo");
   updateBtn.src = editSVG;
   console.log(title);
@@ -166,40 +158,37 @@ function createTodoCard(todo) {
     if (todo.priority) card.classList.add("highPrio");
   }
 
-  checkbox.addEventListener("change", () => {
+  checkbox.addEventListener("change", (event) => {
+    event.stopPropagation();
     toggleTodo(todo);
     displayTodos();
   });
   updateBtn.addEventListener("click", (event) => {
-    if (formOpen) return;
-    formOpen = true;
     event.stopPropagation();
+    if (closeOpenForm) closeOpenForm();
     const updateTodo = createTodoForm(todo);
     card.append(updateTodo);
     updateTodo.addEventListener("submit", (event) => {
       event.preventDefault();
-      const newTitle = new FormData(updateTodo).get("todoName");
-      const newDes = new FormData(updateTodo).get("description");
-      const newDate = new FormData(updateTodo).get("dueDate");
-      const newPrio = new FormData(updateTodo).get("importance");
-      todo.title = newTitle;
-      todo.description = newDes;
-      todo.dueDate = newDate;
-      todo.priority = newPrio;
-      formOpen = false;
+      const data = new FormData(updateTodo);
+      todo.title = data.get("todoName");
+      todo.description = data.get("description");
+      todo.dueDate = data.get("dueDate");
+      todo.priority = data.get("importance");
+      if (closeOpenForm) closeOpenForm();
       displayTodos();
     });
   });
   card.addEventListener("click", (event) => {
-    if (formOpen) return;
-    formOpen = true;
     event.stopPropagation();
+    if (closeOpenForm) closeOpenForm();
     card.append(desc);
+    closeOpenForm = () => {
+      desc.remove();
+      closeOpenForm = null;
+    };
   });
-  document.addEventListener("click", () => {
-    formOpen = false;
-    desc.remove();
-  });
+
   card.append(title, dueDate, checkbox, updateBtn);
   return card;
 }
