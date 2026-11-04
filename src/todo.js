@@ -112,7 +112,7 @@ firstProject.addTodo(
     "Review Tasks",
     "Go through pending tasks and prioritize what needs attention.",
     "2026-11-02",
-    true,
+    false,
   ),
 );
 firstProject.addTodo(

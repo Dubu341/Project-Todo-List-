@@ -110,6 +110,8 @@ function createTodoCard(todo) {
       (card.classList.add("overdue"), dueDate.classList.add("overdueDate"));
   }
 
+  if (todo.priority) card.classList.add("highPrio");
+
   removeBtn.addEventListener("click", () => {
     removeTodo(todo);
     displayTodos();

@@ -19,8 +19,8 @@ function isOverdue(dateString) {
 newTodo(
   "Update Project Progress",
   "Update the status of ongoing projects and identify outstanding tasks.",
-  "1999-11-12",
-  "a",
+  "2030-11-12",
+  false,
   true,
 );
 displayProject();
