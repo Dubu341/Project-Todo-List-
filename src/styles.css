@@ -151,6 +151,7 @@ button {
   outline: none;
   grid-column: 1 / -1;
 }
+
 .editProjectForm button {
   padding: 5px;
   cursor: pointer;
@@ -158,15 +159,60 @@ button {
 
 .projectOpenForm {
   background-color: #5a4632;
+  border: 1px solid #7a6247;
   color: #f4ead7;
   padding: 16px 20px;
   font-size: 15px;
   cursor: pointer;
 }
 .todoContainer {
-  background-color: rgb(184, 184, 236);
+  padding-left: 50px;
+  padding-top: 65px;
+  background-color: #f4ead7;
 }
 
+.todoOpenForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 56px;
+  width: 500px;
+  color: #2a2016;
+  font-size: 1.1rem;
+  background-color: #fbf6ec;
+  border: 1px solid #d9c6a5;
+}
+.todoOpenForm:hover {
+  cursor: pointer;
+  background-color: #efe3cb;
+  border: 1px solid #5a4632;
+}
+
+
+.todoExpandable-container form {
+  padding: 5px;
+  background-color: #5a4632;
+  width: 500px;
+  color: #d9c6a5;
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  row-gap: 5px;
+}
+.todoExpandable-container h3 {
+  grid-column: 1 /-1;
+}
+.todoExpandable-container textarea {
+  resize: vertical;
+}
+#importance {
+  justify-self: start;
+}
+.formBtnWrapper {
+  justify-self: end;
+  grid-column: 2/3;
+  display: flex;
+  gap: 5px;
+}
 /* hidden form */
 .projectExpandable-container {
   max-width: 210px;
@@ -196,19 +242,8 @@ button {
 .projectExpandable-container.active .projectOpenForm {
   display: none;
 }
-.todoExpandable-container {
-  max-width: 300px;
-}
-.todoExpandable-container.active .hidden {
-  max-height: 600px;
-  opacity: 1;
-  padding: 15px;
-  border-color: #ddd;
-}
-.todoExpandable-container.active .todoOpenForm {
-  display: none;
-}
 /* hidden form */
+
 .overdue {
   background-color: red;
 }

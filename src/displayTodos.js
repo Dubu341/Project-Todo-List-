@@ -5,17 +5,18 @@ import { formatDueDate, isOverdue } from "./index.js";
 const container = document.querySelector(".todoContainer");
 const todosContainer = document.querySelector(".todoCard");
 const todoOpenFormBtn = document.querySelector(".todoOpenForm");
+const Formcontainer = document.querySelector(".todoExpandable-container");
+
 let formOpen = false;
+
 todoOpenFormBtn.addEventListener("click", (event) => {
   event.stopPropagation();
-
   if (formOpen) return;
   formOpen = true;
   createTodoForm();
 });
 
 function createTodoForm() {
-  const Formcontainer = createElement("div", "todoExpandable-container");
   Formcontainer.addEventListener("click", (event) => {
     event.stopPropagation();
   });
@@ -32,8 +33,7 @@ function createTodoForm() {
   nameInput.required = true;
   const desLabel = createElement("label", "", "Description:");
   desLabel.htmlFor = "description";
-  const desInput = createElement("input");
-  desInput.type = "text";
+  const desInput = createElement("textarea");
   desInput.name = "description";
   desInput.id = "description";
   const dateLabel = createElement("label", "", "Due Date:");
@@ -42,19 +42,20 @@ function createTodoForm() {
   dateInput.type = "date";
   dateInput.name = "dueDate";
   dateInput.id = "dueDate";
-  const importanceLabel = createElement("label", "", "Mark as important:");
+  const importanceLabel = createElement("label", "", "Mark as important");
   importanceLabel.htmlFor = "importance";
   const importanceInput = createElement("input");
   importanceInput.type = "checkbox";
   importanceInput.name = "importance";
   importanceInput.id = "importance";
+  const btnWrapper = createElement("div", "formBtnWrapper");
   const submitBtn = createElement("button", "", "Create");
   submitBtn.type = "submit";
   const closeBtn = createElement("button", "todoClose", "Close");
   container.append(Formcontainer);
   Formcontainer.append(form);
   todosContainer.before(Formcontainer);
-  Formcontainer.before(todoOpenFormBtn);
+  btnWrapper.append(submitBtn, closeBtn);
   form.append(
     header,
     nameLabel,
@@ -65,11 +66,10 @@ function createTodoForm() {
     dateInput,
     importanceLabel,
     importanceInput,
-    submitBtn,
-    closeBtn,
+    btnWrapper,
   );
   closeBtn.addEventListener("click", () => {
-    Formcontainer.remove();
+    form.remove();
     formOpen = false;
   });
 
@@ -82,11 +82,11 @@ function createTodoForm() {
     newTodo(todoName, todoDescription, todoDueDate, todoPriority);
     displayTodos();
     form.reset();
-    Formcontainer.remove();
+    form.remove();
     formOpen = false;
   });
   document.addEventListener("click", () => {
-    Formcontainer.remove();
+    form.remove();
     formOpen = false;
   });
 }
