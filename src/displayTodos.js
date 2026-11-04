@@ -104,13 +104,14 @@ function createTodoCard(todo) {
   checkbox.classList.add("checkbox");
   checkbox.checked = todo.isComplete;
 
-  if (todo.isComplete) card.classList.add("completed");
+  if (todo.priority) card.classList.add("highPrio");
+
+  if (todo.isComplete)
+    (card.classList.add("completed"), card.classList.remove("highPrio"));
   if (!todo.isComplete) {
     if (isOverdue(todo.dueDate))
       (card.classList.add("overdue"), dueDate.classList.add("overdueDate"));
   }
-
-  if (todo.priority) card.classList.add("highPrio");
 
   removeBtn.addEventListener("click", () => {
     removeTodo(todo);
