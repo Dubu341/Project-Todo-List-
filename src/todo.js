@@ -4,7 +4,7 @@ class Todo {
     title,
     description,
     dueDate,
-    priority,
+    priority = false,
     isComplete = false,
     id = crypto.randomUUID(),
   ) {
@@ -17,6 +17,9 @@ class Todo {
   }
   changeIsComplete() {
     this.isComplete = !this.isComplete;
+  }
+  changePrio() {
+    this.project = !this.priority;
   }
 }
 
@@ -80,9 +83,46 @@ makeProject("Second Project");
 makeProject("Third Project");
 const firstProject = projects[0];
 const secondProject = projects[1];
-secondProject.addTodo(new Todo("test", "testtesttest", "2030-12-01", "high"));
-secondProject.addTodo(new Todo("test1", "testtesttest1", "2022-05-05", "high"));
-firstProject.addTodo(new Todo("test1", "testtesttest1", "2026-11-02", "high"));
+const thirdProject = projects[2];
+secondProject.addTodo(
+  new Todo(
+    "Clean Workspace",
+    "Organize your desk and remove unnecessary items.",
+    "2030-12-01",
+    true,
+    true,
+  ),
+);
+secondProject.addTodo(
+  new Todo(
+    "Update Software",
+    "Check for available updates and install them.",
+    "2022-05-05",
+  ),
+);
+secondProject.addTodo(
+  new Todo(
+    "Organize Files",
+    "Sort documents into folders and delete unnecessary files..",
+    "2026-11-05",
+  ),
+);
+firstProject.addTodo(
+  new Todo(
+    "Review Tasks",
+    "Go through pending tasks and prioritize what needs attention.",
+    "2026-11-02",
+    true,
+  ),
+);
+firstProject.addTodo(
+  new Todo(
+    "Backup Important Files",
+    "	Create a backup of important documents and personal data.",
+    "2030-11-02",
+    true,
+  ),
+);
 //for display testing
 
 function createElement(tag, className, text) {

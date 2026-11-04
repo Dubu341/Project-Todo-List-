@@ -17,8 +17,8 @@ function isOverdue(dateString) {
 }
 
 newTodo(
-  "Meeting",
-  "team sync to review progress and next steps",
+  "Update Project Progress",
+  "Update the status of ongoing projects and identify outstanding tasks.",
   "1999-11-12",
   "a",
   true,
