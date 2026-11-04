@@ -185,7 +185,6 @@ button {
 .todoOpenForm:hover {
   cursor: pointer;
   background-color: #efe3cb;
-  border: 1px solid #5a4632;
 }
 
 .todoForm {
@@ -214,6 +213,7 @@ button {
 }
 
 .updateTodoForm {
+  color: #2a2016;
   padding: 5px;
   padding-left: 10px;
   display: grid;
@@ -269,7 +269,10 @@ button {
   grid-row: 1/3;
   place-self: center;
 }
-
+.todoDescription {
+  grid-column: 1/4;
+  color: #2a2016;
+}
 .checkbox {
   appearance: none;
   -webkit-appearance: none;
@@ -309,8 +312,10 @@ button {
   width: 90px;
 }
 .completed {
-  text-decoration-line: line-through;
   background-color: #c9d6b5 !important;
+}
+.completed p {
+  text-decoration-line: line-through;
 }
 .highPrio {
   border-left: 6px solid #d99a2b !important;

@@ -63,6 +63,7 @@ function createTodoForm(todo) {
     formOpen = false;
   });
   if (todo) {
+    header.textContent = "";
     btnWrapper.classList.remove("formBtnWrapper");
     btnWrapper.classList.add("updateBtnWrapper");
     form.addEventListener("click", (event) => {
@@ -141,8 +142,13 @@ function createTodoForm(todo) {
 
 function createTodoCard(todo) {
   const card = createElement("div", "todo");
-  const title = createElement("p", "", `Title: ${todo.title}.`);
+  const title = createElement("p", "", `Title: ${todo.title}`);
   const dueDate = createElement("p", "dueDate", formatDueDate(todo.dueDate));
+  const desc = createElement(
+    "p",
+    "todoDescription",
+    `${todo.description}`,
+  );
   const updateBtn = createElement("img", "updateTodo");
   updateBtn.src = editSVG;
   console.log(title);
@@ -184,7 +190,16 @@ function createTodoCard(todo) {
       displayTodos();
     });
   });
-
+  card.addEventListener("click", (event) => {
+    if (formOpen) return;
+    formOpen = true;
+    event.stopPropagation();
+    card.append(desc);
+  });
+  document.addEventListener("click", () => {
+    formOpen = false;
+    desc.remove();
+  });
   card.append(title, dueDate, checkbox, updateBtn);
   return card;
 }
