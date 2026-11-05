@@ -20,9 +20,6 @@ class Todo {
   changeIsComplete() {
     this.isComplete = !this.isComplete;
   }
-  changePrio() {
-    this.project = !this.priority;
-  }
 }
 
 class Project {
@@ -95,7 +92,7 @@ function toggleTodo(todo) {
     testMakeProject("Third Project");
     const firstProject = projects[0];
     const secondProject = projects[1];
-    const thirdProject = projects[2];
+    // const thirdProject = projects[2];
     secondProject.addTodo(
       new Todo(
         "Clean Workspace",
