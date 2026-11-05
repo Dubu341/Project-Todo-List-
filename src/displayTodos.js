@@ -43,6 +43,7 @@ function createTodoForm(todo) {
   nameInput.type = "text";
   nameInput.name = "todoName";
   nameInput.id = "todoName";
+  nameInput.maxLength = 20;
   nameInput.required = true;
   const desLabel = createElement("label", "", "Description:");
   desLabel.htmlFor = "description";
