@@ -1,7 +1,14 @@
-import { newTodo, removeTodo, toggleTodo, createElement } from "./todo.js";
+import {
+  newTodo,
+  removeTodo,
+  toggleTodo,
+  createElement,
+  projects,
+} from "./todo.js";
 import { currentProject } from "./displayProjects.js";
 import { formatDueDate, isOverdue } from "./index.js";
 import editSVG from "../images/editSVG.svg";
+import { saveProjects } from "./storage.js";
 
 const container = document.querySelector(".todoContainer");
 const todosContainer = document.querySelector(".todoCard");
@@ -176,6 +183,7 @@ function createTodoCard(todo) {
       todo.dueDate = data.get("dueDate");
       todo.priority = data.get("importance");
       if (closeOpenForm) closeOpenForm();
+      saveProjects(projects);
       displayTodos();
     });
   });

@@ -8,6 +8,8 @@ import {
 } from "./todo.js";
 import editSVG from "../images/editSVG.svg";
 
+defaultProject();
+
 const projectContainer = document.querySelector(".projects");
 const projectOpenFormBtn = document.querySelector(".projectOpenForm");
 const expandProjectContainer = document.querySelector(

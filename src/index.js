@@ -1,6 +1,5 @@
 import { displayProject } from "./displayProjects.js";
 import { displayTodos } from "./displayTodos.js";
-import { newTodo } from "./todo.js";
 
 import "./styles.css";
 import { format, parseISO, isValid, isPast, isToday } from "date-fns";
@@ -16,19 +15,10 @@ function isOverdue(dateString) {
   return isValid(date) && isPast(date) && !isToday(date);
 }
 
-newTodo(
-  "Update Project Progress",
-  "Update the status of ongoing projects and identify outstanding tasks.",
-  "2030-11-12",
-  false,
-  true,
-);
+
 displayProject();
 displayTodos();
 
 export { formatDueDate, isOverdue };
 
-//button that opens details
-// opens a form
-// form has the values as default
-// has update button and close button
+

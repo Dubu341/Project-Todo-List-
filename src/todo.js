@@ -1,4 +1,6 @@
 import { currentProject } from "./displayProjects.js";
+import { saveProjects,loadProjects } from "./storage.js";
+
 class Todo {
   constructor(
     title,
@@ -47,14 +49,19 @@ class Project {
   }
 }
 
-let projects = [];
+let projects = loadProjects();
 
 function removeProject(project) {
   projects = projects.filter((item) => item.id !== project.id);
+  saveProjects(projects);
 }
 
+function testMakeProject(name) {
+  projects.push(new Project(name));
+}
 function makeProject(name) {
   projects.push(new Project(name));
+  saveProjects(projects);
 }
 
 function defaultProject() {
@@ -67,62 +74,78 @@ function newTodo(title, description, dueDate, priority, isComplete) {
   currentProject().addTodo(
     new Todo(title, description, dueDate, priority, isComplete),
   );
+  saveProjects(projects);
 }
 
 function removeTodo(todo) {
   const project = currentProject();
   project.todos = project.todos.filter((item) => item.id !== todo.id);
+  saveProjects(projects);
 }
 
 function toggleTodo(todo) {
   todo.changeIsComplete();
+  saveProjects(projects);
 }
 //for display testing
-makeProject("Default Project");
-makeProject("Second Project");
-makeProject("Third Project");
-const firstProject = projects[0];
-const secondProject = projects[1];
-const thirdProject = projects[2];
-secondProject.addTodo(
-  new Todo(
-    "Clean Workspace",
-    "Organize your desk and remove unnecessary items.",
-    "2030-12-01",
-    true,
-    true,
-  ),
-);
-secondProject.addTodo(
-  new Todo(
-    "Update Software",
-    "Check for available updates and install them.",
-    "2022-05-05",
-  ),
-);
-secondProject.addTodo(
-  new Todo(
-    "Organize Files",
-    "Sort documents into folders and delete unnecessary files..",
-    "2026-11-05",
-  ),
-);
-firstProject.addTodo(
-  new Todo(
-    "Review Tasks",
-    "Go through pending tasks and prioritize what needs attention.",
-    "2026-11-02",
-    false,
-  ),
-);
-firstProject.addTodo(
-  new Todo(
-    "Backup Important Files",
-    "Create a backup of important documents and personal data.",
-    "2030-11-02",
-    true,
-  ),
-);
+(function testing() {
+  if (projects.length === 0) {
+    testMakeProject("Default Project");
+    testMakeProject("Second Project");
+    testMakeProject("Third Project");
+    const firstProject = projects[0];
+    const secondProject = projects[1];
+    const thirdProject = projects[2];
+    secondProject.addTodo(
+      new Todo(
+        "Clean Workspace",
+        "Organize your desk and remove unnecessary items.",
+        "2030-12-01",
+        true,
+        true,
+      ),
+    );
+    secondProject.addTodo(
+      new Todo(
+        "Update Software",
+        "Check for available updates and install them.",
+        "2022-05-05",
+      ),
+    );
+    secondProject.addTodo(
+      new Todo(
+        "Organize Files",
+        "Sort documents into folders and delete unnecessary files..",
+        "2026-11-05",
+      ),
+    );
+    firstProject.addTodo(
+      new Todo(
+        "Update Project Progress",
+        "Update the status of ongoing projects and identify outstanding tasks.",
+        "2030-11-12",
+        false,
+        true,
+      ),
+    );
+    firstProject.addTodo(
+      new Todo(
+        "Review Tasks",
+        "Go through pending tasks and prioritize what needs attention.",
+        "2026-11-02",
+        false,
+      ),
+    );
+    firstProject.addTodo(
+      new Todo(
+        "Backup Important Files",
+        "Create a backup of important documents and personal data.",
+        "2030-11-02",
+        true,
+      ),
+    );
+  }
+})()
 //for display testing
 
 function createElement(tag, className, text) {
@@ -141,4 +164,6 @@ export {
   defaultProject,
   removeTodo,
   toggleTodo,
+  Todo,
+  Project,
 };
