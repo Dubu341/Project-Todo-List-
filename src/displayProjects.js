@@ -7,6 +7,7 @@ import {
   defaultProject,
 } from "./todo.js";
 import editSVG from "../images/editSVG.svg";
+import { saveProjects } from "./storage.js";
 
 defaultProject();
 
@@ -72,7 +73,7 @@ function createUpdateProjectForm(project) {
 }
 let closeOpenProjectForm = null;
 
-document.addEventListener("click", (event) => {
+document.addEventListener("click", () => {
   if (!closeOpenProjectForm) return;
   closeOpenProjectForm();
 });
@@ -119,6 +120,7 @@ function displayProject() {
       event.preventDefault();
       const newName = new FormData(editForm).get("newName");
       project.name = newName;
+      saveProjects(projects);
       displayProject();
     });
     projectContainer.append(projectDiv);
